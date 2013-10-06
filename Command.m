@@ -6,14 +6,19 @@ classdef Command
     
     properties (Abstract)
         hasPath
-        longCmd
         Name
+		Usage
+		ParameterList
     end
     
     methods
         function obj = Command(name)
             obj.Name = name
         end
+		
+		function usage(name)
+			disp(Usage)
+		end
         
         function registerCmd(obj, registry)
             registry = [registry,obj];

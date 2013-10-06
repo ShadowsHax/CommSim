@@ -12,9 +12,9 @@ pathMap = logical(eye(peerCount+1));
 
 %Initialize Testing Entities
 disp('Creating Peer Network...')
-Central = CommSim.EntityData([0 0 0],0,0);
+Central = CommSim.EntityData([0 0 0],0,[0 0 0],0);
 for i=1:peerCount
-    Peers(i) = CommSim.EntityData([100*randi(10) 25+100*randi([0 10]) 100*randi(10)],0,0);
+    Peers(i) = CommSim.EntityData([100*randi(10) 25+100*randi([0 10]) 100*randi(10)],0,[0 0 0],0);
     rng('shuffle');
 end
 disp('Peer Network Established.')
