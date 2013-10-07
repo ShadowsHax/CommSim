@@ -12,7 +12,20 @@ classdef SimCMD < Command
 	end
 	methods
 		function runSim(duration,simEnvironment)
-			simEnvironment.Time += duration
+			simEnvironment.Time += duration;
+		end
+		
+		function simStats(simEnvironment)
+			simEnvironment.Time
+			simEnvironment.MapSize
+			simEnvironment.Weather
+			simEnvironment.Entities(:)
+		end
+		
+		function simRestart(simEnvironment)
+			simEnvironment.Time = origTime;
+			simEnvironment.Weather = origWeather;
+			simEnvironment.Entities(:) = origEntities(:);
 		end
 	end
 end
