@@ -22,7 +22,7 @@ classdef EntityData
 				end
                 obj.Position = position;
                 obj.Speed = speed;
-				obj.Velocity = velocity
+				obj.Velocity = velocity;
                 obj.Status = status;
                 obj.TargetAltitude = position(2);
             end

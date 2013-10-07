@@ -33,10 +33,15 @@ for i=1:length(Peers)
 end
 disp('Network Check Complete.')
 disp('Initializing Command Registry...')
+registry = [];
+sim = CommSim.SimCMD()
+registry = registerCmd(sim,registry);
 disp('Commands Registered with Simulation.')
 cmd = input('CommSim:>>','s');
 while ~strcmp(cmd,'exit')
-    strcmp(cmd,registry)
+    if length(registry(:).Usage) <= length(cmd) && strcmp(registry(:).Usage,cmd(1:length(registry(:).Usage)))
+        disp('Let me run that command for you...')
+    end
     cmd = input('CommSim:>>','s');
 end
 disp('Decomposing Simulation...')

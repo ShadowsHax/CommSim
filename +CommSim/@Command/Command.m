@@ -12,16 +12,13 @@ classdef Command
     end
     
     methods
-        function obj = Command(name)
-            obj.Name = name
-        end
 		
-		function usage(name)
-			disp(Usage)
+		function usage(obj)
+			disp(obj.Usage)
 		end
         
-        function registerCmd(obj, registry)
-            registry = [registry,obj];
+        function registry = registerCmd(obj, registryVec)
+            registry = [registryVec,obj];
         end
     end
     

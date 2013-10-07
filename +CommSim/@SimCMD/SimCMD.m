@@ -1,4 +1,4 @@
-classdef SimCMD < Command
+classdef SimCMD < CommSim.Command
 	%SIMCMD: Run simulation using current parameters
 	%	Simulation command to run a network communications test for
 	%	the current set of parameters. Assumes that all defined vars
@@ -7,12 +7,15 @@ classdef SimCMD < Command
 	properties
 		hasPath = 0;
 		Name = 'Simulate';
-		Usage = ['runSim(duration,)'];
-		ParamList = [];
+		Usage = 'runSim(';
+		ParameterList = ['duration'];
 	end
 	methods
+        function obj = SimCMD()
+        end
+        
 		function runSim(duration,simEnvironment)
-			simEnvironment.Time += duration;
+			simEnvironment.Time = simEnvironment.Time + duration;
 		end
 		
 		function simStats(simEnvironment)
