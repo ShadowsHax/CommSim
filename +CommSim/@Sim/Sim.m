@@ -17,19 +17,31 @@ classdef Sim
 	methods
 		function obj = Sim(size,time,weather,EntityList)
 			if nargin > 0
-				if length(size) ~= 5
+                if length(size) ~= 5
 					error('CommSim:Sim','MapSize vector is of invalid length. Size must be a 5 element vector');
-				if nargin == 2
-					obj.MapSize = size;
-					obj.Time = time;
-					obj.Weather = weather;
-					obj.Entities = EntityList;
-					obj.origTime = time;
-					obj.origWeather = weather;
-					obj.origEntities = EntityList;
-				else if nargin == 1
-					obj.MapSize = size;
-				end
+                end
+                switch nargin
+                    case 4,
+                        obj.MapSize = size;
+                        obj.Time = time;
+                        obj.Weather = weather;
+                        obj.Entities = EntityList;
+                        obj.origTime = time;
+                        obj.origWeather = weather;
+                        obj.origEntities = EntityList;
+                    case 3,
+                        obj.MapSize = size;
+                        obj.Time = time;
+                        obj.Weather = weather;
+                        obj.origTime = time;
+                        obj.origWeather = weather;
+                    case 2,
+                        obj.MapSize = size;
+                        obj.Time = time;
+                        obj.origTime = time;
+                    case 1,
+                        obj.MapSize = size;
+                end
 			else
 			error('CommSim:Sim','Sim constructor requires at least MapSize parameter.');
 			end

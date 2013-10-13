@@ -10,13 +10,15 @@ peerCount = 4;                      % # Network Peers, excluding Central Command
 
 pathMap = logical(eye(peerCount+1));
 
-%Initialize Testing Entities
+disp('Creating Simulation Environment...')
+environ = CommSim.Sim([0,10000,1000,0,10000],0,'Clear')
 disp('Creating Peer Network...')
 Central = CommSim.EntityData([0 0 0],0,[0 0 0],0);
 for i=1:peerCount
     Peers(i) = CommSim.EntityData([100*randi(10) 25+100*randi([0 10]) 100*randi(10)],0,[0 0 0],0);
     rng('shuffle');
 end
+environ.Entities = [Central Peers(:)'];
 disp('Peer Network Established.')
 disp('Checking Network Connections...')
 for i=1:length(Peers)
@@ -32,16 +34,23 @@ for i=1:length(Peers)
     end
 end
 disp('Network Check Complete.')
+disp('Simulation Environment Created.')
 disp('Initializing Command Registry...')
 registry = [];
 sim = CommSim.SimCMD()
-registry = registerCmd(sim,registry);
+registry = registerCMD(sim,registry);
 disp('Commands Registered with Simulation.')
 cmd = input('CommSim:>>','s');
-while ~strcmp(cmd,'exit')
-    if length(registry(:).Usage) <= length(cmd) && strcmp(registry(:).Usage,cmd(1:length(registry(:).Usage)))
+rawCmd = cmd(1:find(cmd=='(')-1)
+while ~strcmp(rawCmd,'quitSim')
+    if ~isequal(strcmp(registry(:).CommandList(:),rawCmd),zeros(length(registry(:).CommandList(:)),1))
         disp('Let me run that command for you...')
+        eval(['sim.' cmd])
+    else
+        error('CommSim:CmdLine', ['Command "' cmd '" not found.'])
     end
     cmd = input('CommSim:>>','s');
+    rawCmd = cmd(1:find(cmd=='(')-1)
 end
 disp('Decomposing Simulation...')
+clc,clear,close all

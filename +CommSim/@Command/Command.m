@@ -5,21 +5,24 @@ classdef Command
     %   commands.
     
     properties (Abstract)
-        hasPath
+        Path
         Name
-		Usage
+		CommandList
 		ParameterList
     end
     
     methods
 		
 		function usage(obj)
-			disp(obj.Usage)
-		end
+			disp(obj.CommandList(:))
+        end
         
-        function registry = registerCmd(obj, registryVec)
-            registry = [registryVec,obj];
+        function equality = cmp(obj1,obj2)
+            if obj1.Name == obj2.Name
+                equality = 1;
+            else
+                equality = 0;
+            end
         end
     end
-    
 end
