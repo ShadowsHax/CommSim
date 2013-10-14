@@ -8,10 +8,10 @@ classdef SimCMD < CommSim.Command
 		Path = [];
 		Name = 'Simulate';
 		CommandList = {'runSim' 'simStats' 'simRestart' 'quitSim'};
-		ParameterList = {'duration' 'simEnvironment';...
-                         'simEnvironment';...
-                         'simEnvironment';...
-                         ''};
+		ParameterList = {'duration' 'simEnvironment' '';
+                         'simEnvironment' '(property)' '(index)';
+                         'simEnvironment' '' '';
+                         '' '' ''};
     end
     
     methods (Static)
@@ -30,16 +30,16 @@ classdef SimCMD < CommSim.Command
                     EntityList = simEnvironment.Entities(:)'
                 else
                     switch property
-                        case 'Time',
+                        case {'Time','time'},
                             disp(['Sim Time: ' num2str(simEnvironment.Time)])
                         case {'MapSize','Map Size'},
                             disp(['Map Size: [' num2str(simEnvironment.MapSize(:)') ']'])
-                        case 'Weather',
+                        case {'Weather','weather'},
                             disp(['Weather conditions: ' simEnvironment.Weather])
-                        case 'Entity',
+                        case {'Entity','entity',},
                             disp('Working on it.')
                         otherwise
-                            error('CommSim:')
+                            error('CommSim:simStats', ['Property "' property '" does not exist within simulation environment.'])
                     end
                     disp(' ')
                 end

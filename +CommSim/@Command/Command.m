@@ -13,8 +13,15 @@ classdef Command
     
     methods
 		
-		function usage(obj)
+		function commands(obj)
 			disp(obj.CommandList(:))
+        end
+        
+        function usage(obj,command)
+            i = find(strcmp([obj.CommandList],command));
+            if logical(i)
+                disp(obj.ParameterList(i,:))
+            end
         end
         
         function equality = cmp(obj1,obj2)
