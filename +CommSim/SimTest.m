@@ -13,9 +13,9 @@ pathMap = logical(eye(peerCount+1));
 disp('Creating Simulation Environment...')
 environ = CommSim.Sim([0,10000,1000,0,10000],0,'Clear');
 disp('Creating Peer Network...')
-Central = CommSim.EntityData([0 0 0],0,[0 0 0],0);
+Central = CommSim.EntityData([0 0 0],[0 0 0],0,'Central');
 for i=1:peerCount
-    Peers(i) = CommSim.EntityData([100*randi(10) 25+100*randi([0 10]) 100*randi(10)],0,[0 0 0],0);
+    Peers(i) = CommSim.EntityData([100*randi(10) 25+100*randi([0 10]) 100*randi(10)],[10 0 0],0,['Peer' int2str(i)]);
     rng('shuffle');
 end
 environ.Entities = [Central Peers(:)'];
@@ -42,15 +42,14 @@ registry = registerCMD(sim,registry);
 disp('Commands Registered with Simulation.')
 cmd = input('CommSim:>>','s');
 rawCmd = cmd(1:find(cmd=='(')-1);
-while ~strcmp(rawCmd,'quitSim')
+while ~strcmp(rawCmd,'closeSim')
     if ~isequal(strcmp(registry(:).CommandList(:),rawCmd),zeros(length(registry(:).CommandList(:)),1))
-        disp('Let me run that command for you...')
-        eval(['sim.' cmd])
+        eval(['sim.' cmd(1:find(cmd==')'))])
     else
-        error('CommSim:CmdLine', ['Command "' cmd '" not found.'])
+        disp(['Command "' cmd '" not found.'])
     end
     cmd = input('CommSim:>>','s');
     rawCmd = cmd(1:find(cmd=='(')-1);
 end
 disp('Decomposing Simulation...')
-clc,clear,close all
+clc,close all

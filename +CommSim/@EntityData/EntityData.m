@@ -4,27 +4,36 @@ classdef EntityData
     %   Also contains information about physical operation status.
     
     properties
+        Name = '';
         Position = [0 0 0];
-        Speed = 0;
 		Velocity = [0 0 0];
         TargetAltitude = 0;
         Status = 'Operational';
     end
     
     methods
-        function obj = EntityData(position,speed,velocity,status)
+        function obj = EntityData(position,velocity,status,name)
             if nargin > 0
                 if length(position) ~= 3
                     error('CommSim:positionVector', 'Invalid Vector size. Must be 3 elements (quaternions not implemented yet).')
                 end
-				if length(velocity) ~= 3
-					error('CommSim:velocityVector', 'Invalid Vector size. Must be 3 elements (quaternions not implemented yet).')
-				end
                 obj.Position = position;
-                obj.Speed = speed;
-				obj.Velocity = velocity;
-                obj.Status = status;
                 obj.TargetAltitude = position(2);
+                if nargin > 1
+                    if length(velocity) ~= 3
+                        error('CommSim:velocityVector', 'Invalid Vector size. Must be 3 elements (quaternions not implemented yet).')
+                    else
+                        obj.Velocity = velocity;
+                    end
+                end
+                if nargin > 2
+                    obj.Status = status;
+                end
+                if nargin > 3
+                    obj.Name = name;
+                end
+            else
+                error('CommSim:EntityData', 'EntityData Constructor requires at least position parameter.')
             end
         end
         
