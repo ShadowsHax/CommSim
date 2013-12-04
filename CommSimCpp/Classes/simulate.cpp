@@ -2,8 +2,8 @@
 
 Simulate::Simulate()
 {
-    std::vector<std::vector<std::string>> CMDList;
-    std::vector<std::string> CMDParams;
+    std::vector<std::vector<std::string>> CMDParams;
+    std::vector<std::string> CMDList;
     CMDList.push_back("runSim");
     CMDList.push_back("simStats");
     CMDList.push_back("simRestart");
@@ -23,6 +23,6 @@ void Simulate::simRestart()
 {
 }
 
-void Simulate::quitSim()
+void Simulate::quitSim(SimEnvironment environ)
 {
 }

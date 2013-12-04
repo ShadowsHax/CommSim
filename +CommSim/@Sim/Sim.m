@@ -12,6 +12,7 @@ classdef Sim < handle
 		origWeather = 'Clear';					% Original Weather conditions. Used for simRestart command
 		Entities = [];							% List of all Entities within the simulation
 		origEntities = [];						% Original Entity data. Used for simRestart command.
+        commRegistry = [];
 	end
 	
 	methods
@@ -31,10 +32,12 @@ classdef Sim < handle
                 end
                 if nargin > 3
                     obj.Entities = EntityList;
+                    obj.origEntities = EntityList;
                 end
+                obj.commRegistry = initRegistry();
 			else
 			error('CommSim:Sim','Sim constructor requires at least MapSize parameter.');
 			end
-		end
-	end
+        end 
+    end
 end

@@ -2,6 +2,7 @@
 #define SIMULATE_H
 
 #include <command.h>
+#include "Classes/simenvironment.h"
 
 class Simulate: Command
 {
@@ -13,7 +14,7 @@ public:
     void runSim(double duration);
     void simStats();
     void simRestart();
-    void quitSim();
+    void quitSim(SimEnvironment environ);
 };
 
 #endif // SIMULATE_H

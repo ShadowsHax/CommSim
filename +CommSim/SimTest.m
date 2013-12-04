@@ -6,7 +6,7 @@ clc,clear,close all
 %}
 maxCommsDist = 1e3;                 % Maximum Communication Distance, km
 processorSpeed = 2.4e6;             % Processor Speed, Hz
-peerCount = 4;                      % # Network Peers, excluding Central Command
+peerCount = 100;                    % # Network Peers, excluding Central Command
 
 pathMap = logical(eye(peerCount+1));
 
@@ -21,8 +21,10 @@ end
 environ.Entities = [Central Peers(:)'];
 disp('Peer Network Established.')
 disp('Checking Network Connections...')
+fprintf('Checking Peer ');
 for i=1:length(Peers)
-    disp(['Checking Peer ' num2str(i) '...'])
+    peerNum = [num2str(i) '...'];
+    fprintf(peerNum)
     if checkDistanceTo(Central, Peers(i)) < maxCommsDist
         pathMap(i,1) = 1;
         pathMap(1,i) = 1;
@@ -32,24 +34,15 @@ for i=1:length(Peers)
             pathMap(i+1,j+1) = 1;
         end
     end
+    if i<length(Peers)
+        fprintf(repmat('\b',1,numel(peerNum)));
+    else fprintf('\n');
+    end
 end
 disp('Network Check Complete.')
 disp('Simulation Environment Created.')
 disp('Initializing Command Registry...')
-registry = [];
-sim = CommSim.SimCMD();
-registry = registerCMD(sim,registry);
 disp('Commands Registered with Simulation.')
-cmd = input('CommSim:>>','s');
-rawCmd = cmd(1:find(cmd=='(')-1);
-while ~strcmp(rawCmd,'closeSim')
-    if ~isequal(strcmp(registry(:).CommandList(:),rawCmd),zeros(length(registry(:).CommandList(:)),1))
-        eval(['sim.' cmd(1:find(cmd==')'))])
-    else
-        disp(['Command "' cmd '" not found.'])
-    end
-    cmd = input('CommSim:>>','s');
-    rawCmd = cmd(1:find(cmd=='(')-1);
-end
+sim.simStart();
 disp('Decomposing Simulation...')
 clc,close all

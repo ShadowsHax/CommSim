@@ -18,7 +18,6 @@ SOURCES += main.cpp\
     Classes/simenvironment.cpp
 
 HEADERS  += mainwindow.h \
-    Processes/GeoData.h \
     Classes/command.h \
     ErrorHandles/errorbase.h \
     Classes/simulate.h \
