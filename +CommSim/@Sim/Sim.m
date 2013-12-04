@@ -1,4 +1,4 @@
-classdef Sim
+classdef Sim < handle
 	%SIM: Simulation Environment Object
 	%	Class contains all data for a specific simulation pass,
 	%	and holds all information pertaining to the system after
@@ -12,6 +12,7 @@ classdef Sim
 		origWeather = 'Clear';					% Original Weather conditions. Used for simRestart command
 		Entities = [];							% List of all Entities within the simulation
 		origEntities = [];						% Original Entity data. Used for simRestart command.
+        commRegistry = [];
 	end
 	
 	methods
@@ -20,31 +21,23 @@ classdef Sim
                 if length(size) ~= 5
 					error('CommSim:Sim','MapSize vector is of invalid length. Size must be a 5 element vector');
                 end
-                switch nargin
-                    case 4,
-                        obj.MapSize = size;
-                        obj.Time = time;
-                        obj.Weather = weather;
-                        obj.Entities = EntityList;
-                        obj.origTime = time;
-                        obj.origWeather = weather;
-                        obj.origEntities = EntityList;
-                    case 3,
-                        obj.MapSize = size;
-                        obj.Time = time;
-                        obj.Weather = weather;
-                        obj.origTime = time;
-                        obj.origWeather = weather;
-                    case 2,
-                        obj.MapSize = size;
-                        obj.Time = time;
-                        obj.origTime = time;
-                    case 1,
-                        obj.MapSize = size;
+                obj.MapSize = size;
+                if nargin > 1
+                    obj.Time = time;
+                    obj.origTime = time;
                 end
+                if nargin > 2
+                    obj.Weather = weather;
+                    obj.origWeather = weather;
+                end
+                if nargin > 3
+                    obj.Entities = EntityList;
+                    obj.origEntities = EntityList;
+                end
+                obj.commRegistry = initRegistry();
 			else
 			error('CommSim:Sim','Sim constructor requires at least MapSize parameter.');
 			end
-		end
-	end
+        end 
+    end
 end

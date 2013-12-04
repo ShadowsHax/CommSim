@@ -1,9 +1,7 @@
-function simRestart( simEnvironment )
-%SIMRESTART Summary of this function goes here
-%   Detailed explanation goes here
-
-    simEnvironment.Time = origTime;
-	simEnvironment.Weather = origWeather;
-	simEnvironment.Entities = origEntities;
+function simRestart(simEnvironment)
+%SIMRESTART: Restart simulation for Environment simEnvironment
+    simEnvironment.Time = simEnvironment.origTime;
+    simEnvironment.Weather = simEnvironment.origWeather;
+    simEnvironment.Entities = simEnvironment.origEntities;
 end
 

@@ -5,44 +5,29 @@ classdef SimCMD < CommSim.Command
 	%	will be held constant during simulation.
 	
 	properties
-		Path = [];
+		Path = 'sim';
 		Name = 'Simulate';
-		CommandList = {'runSim' 'simStats' 'simRestart' 'quitSim'};
-		ParameterList = {'duration' 'simEnvironment';...
-                         'simEnvironment';...
-                         'simEnvironment';...
-                         ''};
+		CommandList = {'runSim' 'simStats' 'simRestart' 'closeSim' 'simStart'};
+		ParameterList = {'duration' 'simEnvironment' '';
+                         'simEnvironment' '(property)' '(index)';
+                         'simEnvironment' '' '';
+                         '' '' '';
+                         'simEnvironment' '' ''};
     end
     
     methods (Static)
         
-        function quitSim()
-            clc,clear,close all
-        end
-        
-        function simStats(simEnvironment, property, index)
-            if nargin > 0
-                if nargin == 1
-                    disp(['Sim Time: ' num2str(simEnvironment.Time)])
-                    disp(['Map Size: [' num2str(simEnvironment.MapSize(:)') ']'])
-                    disp(['Weather conditions: ' simEnvironment.Weather])
-                    disp('Entities in Simulation: ')
-                    EntityList = simEnvironment.Entities(:)'
-                else
-                    switch property
-                        case 'Time',
-                            disp(['Sim Time: ' num2str(simEnvironment.Time)])
-                        case {'MapSize','Map Size'},
-                            disp(['Map Size: [' num2str(simEnvironment.MapSize(:)') ']'])
-                        case 'Weather',
-                            disp(['Weather conditions: ' simEnvironment.Weather])
-                        case 'Entity',
-                            disp('Working on it.')
-                        otherwise
-                            error('CommSim:')
-                    end
-                    disp(' ')
-                end
+        %Planned for implementation.
+        closeSim()
+        simStats(simEnvironment, property, index)
+        runSim(simEnvironment,duration)
+        simRestart(simEnvironment)
+        simStart(simEnvironment)
+        function simHelp(command)
+            if nargin < 0
+                disp('Help text goes here.')
+            else
+                eval(['help ' command])
             end
         end
     end
